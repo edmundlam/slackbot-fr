@@ -1,0 +1,29 @@
+{
+  "name": "slackbot-fr",
+  "version": "0.1.0",
+  "description": "A Node.js Slackbot build to help my friends learn French",
+  "main": "slackbot.js",
+  "dependencies": {
+    "slackbots": "^1.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edmundlam/slackbot-fr.git"
+  },
+  "keywords": [
+    "slackbot",
+    "french",
+    "trivia",
+    "translation"
+  ],
+  "author": "Edmund Lam",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edmundlam/slackbot-fr/issues"
+  },
+  "homepage": "https://github.com/edmundlam/slackbot-fr#readme"
+}
