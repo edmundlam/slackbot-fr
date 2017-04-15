@@ -66,10 +66,10 @@ bot.on("message", function (data) {
         }
         else if (GameInfo.active) {checkAnswer(data.text, data.user);}
 
-        else {
-            history = data.text;
-            postMessage("Hello <@" + data.user + "> I got your message, it was: " + data.text);
-        }
+        // else {
+        //     history = data.text;
+        //     postMessage("Hello <@" + data.user + "> I got your message, it was: " + data.text);
+        // }
     }
 
     console.log(JSON.stringify(data, null, 4));
@@ -107,7 +107,8 @@ nextQuestion = function () {
     if (GameInfo.counter < questionBank.length - 1) {
         GameInfo.counter++;
         GameInfo.currentQuestion = questionBank[GameInfo.counter];
-        ask_question();
+        postMessage("Next question in 4 seconds")
+        setTimeout(ask_question, 4000);
     } else {
         stopQuiz();
     }
