@@ -1,4 +1,4 @@
 # slackbot-fr
-A Node.js Slackbot build to help my friends learn French.
+A Node.js Slackbot built to help my friends learn French.
 
 Under Construction
