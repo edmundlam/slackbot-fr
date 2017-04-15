@@ -61,6 +61,7 @@ bot.on('message', function(data) {
             else if (data.text == 'last message') {
                 post_message("Hello <@" + data.user + "> the last message was: " + history);
             }
+            else if (GameInfo.active) {check_answer(data.text, data.user)}
 
             else {
                 history = data.text
@@ -75,8 +76,10 @@ start_quiz = function() {
     if (GameInfo.active) {
         post_message("Game already started!")
     } else {
-        post_message("Starting quiz!")
-        GameInfo.active = true
+        post_message("Starting quiz!").then(function() {
+            GameInfo.active = true
+            ask_question()
+        }) 
     }
 }
 
@@ -86,6 +89,23 @@ stop_quiz = function() {
         GameInfo.active = false
     } else {
         post_message("No game to stop!")
+    }
+}
+
+ask_question = function() {
+    post_message("Conjuger le verbe aller dans cette phrase: Nous ______ à la bibliothèque")
+    GameInfo.current_question = {}
+    GameInfo.current_question.answer = 'allons'
+    GameInfo.current_question.full_answer = 'Nous allons à la bibliothèque'
+}
+
+check_answer = function(message, user) {
+    // check if message matches current answer
+    if (message === GameInfo.current_question.answer) {
+        post_message("Hello <@" + user + "> is correct! " + GameInfo.current_question.full_answer)
+        .then(function() {stop_quiz()})
+    } else {
+        post_message("Sorry <@" + user + ">, " + message + " is not the right answer")
     }
 }
 
