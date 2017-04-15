@@ -1,5 +1,6 @@
 var SlackBot = require("slackbots");
 var config = require("./config");
+var questionBank = require("./questionBank");
 
 console.log("Read config: " + JSON.stringify(config, null, 4));
 
@@ -16,7 +17,8 @@ var params = {
 
 // Game status
 var GameInfo = {
-    active: false
+    active: false,
+    counter: 0
 };
 
 bot.on("start", function () {
@@ -62,7 +64,7 @@ bot.on("message", function (data) {
         else if (data.text == "last message") {
             postMessage("Hello <@" + data.user + "> the last message was: " + history);
         }
-        else if (GameInfo.active) {check_answer(data.text, data.user);}
+        else if (GameInfo.active) {checkAnswer(data.text, data.user);}
 
         else {
             history = data.text;
@@ -79,6 +81,8 @@ startQuiz = function () {
     } else {
         postMessage("Starting quiz!").then(function () {
             GameInfo.active = true;
+            GameInfo.counter = 0;
+            GameInfo.currentQuestion = questionBank[0];
             ask_question();
         });
     }
@@ -94,17 +98,26 @@ stopQuiz = function () {
 };
 
 ask_question = function () {
-    postMessage("Conjuger le verbe aller dans cette phrase: Nous ______ à la bibliothèque");
-    GameInfo.current_question = {};
-    GameInfo.current_question.answer = "allons";
-    GameInfo.current_question.full_answer = "Nous allons à la bibliothèque";
+    postMessage(GameInfo.currentQuestion.fullQuestion());
 };
 
-check_answer = function (message, user) {
+nextQuestion = function () {
+    //if there are questions left, then ask next question
+    //if not, end the game
+    if (GameInfo.counter < questionBank.length - 1) {
+        GameInfo.counter++;
+        GameInfo.currentQuestion = questionBank[GameInfo.counter];
+        ask_question();
+    } else {
+        stopQuiz();
+    }
+};
+
+checkAnswer = function (message, user) {
     // check if message matches current answer
-    if (message === GameInfo.current_question.answer) {
-        postMessage("Hello <@" + user + "> is correct! " + GameInfo.current_question.full_answer)
-        .then(function () {stopQuiz();});
+    if (message === GameInfo.currentQuestion.answer) {
+        postMessage("<@" + user + "> is correct! " + GameInfo.currentQuestion.fullAnswer())
+        .then(function () {nextQuestion();});
     } else {
         postMessage("Sorry <@" + user + ">, " + message + " is not the right answer");
     }
