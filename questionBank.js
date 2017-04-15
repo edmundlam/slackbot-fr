@@ -22,9 +22,12 @@ function Question(subject, verb, complement, answer) {
 
 var questionBank = [
     new Question("Nous", "aller", "à la bibliothèque.", "allons"),
-    new Question("Je", "aller", "à la bibliothèque.", "vais"),
-    new Question("Tu", "aller", "à la bibliothèque.", "vas"),
-    new Question("Il", "aller", "à la bibliothèque.", "va"),
+    new Question("Il", "fermer", "notre serveur.", "ferme"),
+    new Question("Prateek", "boir", "du Soylent.", "boit"),
+    new Question("Nous", "manger", "à l'extérieur tous les vendredis.", "mangeons"),
+    new Question("Je", "programmer", "en javascript pour le fun.", "programme"),
+    new Question("Il", "faire", "beau dehors.", "fait"),
+    new Question("Je", "être", "en feu!!", "suis"),
 ];
 
 module.exports = questionBank;
